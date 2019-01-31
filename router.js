@@ -70,5 +70,4 @@ function routes(app) {
     app.get('/get-comments/:id', validator.singleIdValidator, NoticeController.getComments);
     app.get('/get-dashboard-events/:page', NoticeController.getDashboardEvents);
 
-    //========================================================================================APIS FOR NORMAL USER
 }
