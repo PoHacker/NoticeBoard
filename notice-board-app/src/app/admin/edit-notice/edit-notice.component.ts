@@ -113,14 +113,16 @@ export class EditNoticeComponent implements OnInit {
               this.dropdownList.push({ item_id: i + 1, email: emails[i].name + ' (' + emails[i].email_address + ')' });
               // this.dropdownList.push({ item_id: i + 1, email: emails[i].email_address })
             }
+
             if (data.attendees[0].length >= 1) {
               for (let i = 0; i < data.attendees[0].length; i++) {
-                this.selectedItems.push({ item_id: (this.dropdownList.find(x => x.email == data.attendees[0][i]).item_id), email: data.attendees[0][i] });
+                this.selectedItems.push({ item_id: (this.dropdownList.find(x => x.email.substring(x.email.indexOf('(') + 1, x.email.indexOf(')')) == data.attendees[0][i])).item_id, email: data.attendees[0][i] });
               }
             }
             this.attendees.setValue(this.selectedItems);
             this.emailsList = true;
           }
+        }, (reason) => {
         })
         this.isEvent = true;
       } else {
@@ -141,7 +143,7 @@ export class EditNoticeComponent implements OnInit {
   onSubmit() {
     if (this.noticeDetails.get('attendees')) {
       let temp = this.attendees.value.map((o) => {
-        return { item_id: o.item_id, email: o.email.substr(o.email.indexOf('(') + 1, o.email.indexOf(')')) }
+        return { item_id: o.item_id, email: o.email.substring(o.email.indexOf('(') + 1, o.email.indexOf(')')) }
       })
       this.attendees.setValue(temp);
     }

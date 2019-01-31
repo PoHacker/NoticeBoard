@@ -65,7 +65,7 @@
           <label class="col-sm-2 control-label">Attendees</label>
           <div class="col-sm-6">
             <ng-multiselect-dropdown formControlName="attendees" placeholder="Attendees for the Event" [data]="dropdownList"
-              (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" [settings]="dropdownSettings">
+              [settings]="dropdownSettings">
             </ng-multiselect-dropdown>
           </div>
         </div>
@@ -77,7 +77,7 @@
             <button class="btn btn-primary post-btn" [disabled]="!noticeDetails.valid" *ngIf="!isEvent">Edit Notice</button>
           </div>
         </div>
-        
+
       </form>
     </div>
 

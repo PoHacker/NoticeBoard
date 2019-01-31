@@ -4,13 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --output-path=public",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "pwa": "ng build --prod && sw-precache --root=dist --config=precache-config.js",
-    "deploy": "ng build --prod && firebase deploy"
+    "pwa": "ng build --prod && sw-precache --root=dist --config=precache-config.js"
   },
   "private": true,
   "dependencies": {
