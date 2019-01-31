@@ -1,0 +1,107 @@
+<h1>Notices</h1>
+<div class="text-right col-xs-12">
+  <div class="col-xs-12" style="margin-bottom: 10px;"><button [routerLink]="['/add-notice']" class="btn custombtn">Add
+      Notice</button></div>
+</div>
+<div class="wrapper-white-bg pt-0">
+  <div class="category table-responsive">
+    <div class="job-category nopadding col-xs-12 col-sm-12">
+      <form class="form-inline form1 col-xs-12 col-sm-7 col-md-8 col-lg-9 p-0">
+        <div class="form-group">
+          <label class="holiday-padding">Show</label>
+          <select class="form-control" [formControl]="noticeType" (change)="onChange()">
+            <option value="Approved">Approved</option>
+            <option value="Archived">Archived</option>
+            <option value="Pending">Pending</option>
+          </select>
+        </div>
+      </form>
+      <form class="form-inline form2 col-xs-12 col-sm-5 col-md-4 col-lg-3 text-right p-0 pull-right">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" (keyup)="onKeyUp($event)">
+        </div>
+      </form>
+    </div>
+    <div class=" nopadding col-xs-12 col-sm-12" *ngIf="notices">
+      <table class="table">
+        <tr class="tableheader">
+          <th>Title</th>
+          <th>Description</th>
+          <th>Created By</th>
+          <th>Created Date</th>
+          <th>Approved By</th>
+          <th>Approved Date</th>
+          <th>Actions</th>
+        </tr>
+        <tr class="tabledata" *ngFor="let notice of notices">
+          <td>
+            <p tooltip="{{notice.title}}" placement="right">{{(notice.title.length>10)? (notice.title|
+              slice:0:10)+'..':(notice.title)}}</p>
+          </td>
+          <td class="pointer" (click)="openDescription(templateDescription,notice.description)">
+            <p class="pointer">{{(notice.description.length>50)?
+              (notice.description
+              |
+              slice:0:50)+'...':(notice.description) }}</p>
+          </td>
+          <td>{{ notice.createdby }}</td>
+          <td>{{ notice.creationdate| date:'medium' }}</td>
+          <td>{{ notice.approvedby ? (notice.approvedby): NA }}</td>
+          <td>{{ notice.approveddate ? (notice.approveddate| date:'medium') : NA }}</td>
+
+          <td *ngIf="noticeType.value == 'Approved'">
+
+            <i class="ion-ios-trash-outline pointer" (click)="opneDeleteModal(notice.id,template)" tooltip="Delete Notice"
+              placement="top"></i>
+            <i class="ion-edit pointer" (click)="editNotice(notice.id)" tooltip="Edit Notice" placement="top"></i>
+          </td>
+          <td *ngIf="!(noticeType.value == 'Approved')">
+            <i class="ion-ios-trash-outline" (click)="opneDeleteModal(notice.id,template)" tooltip="Delete Notice"
+              placement="top"></i>
+            <i class="ion-android-done" (click)="approveNotice(notice.id,notice.email)" tooltip="Approve Notice"
+              placement="top"></i>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12" *ngIf="pages">
+  <ul class="pagination center pull-right">
+    <li>
+      <a (click)="previousPage()" [class]="currentPage == 1 ? 'no-drop ': ''" style="cursor: pointer;" aria-label="Previous">
+        <span aria-hidden="true">Previous</span>
+      </a>
+    </li>
+    <li *ngFor="let page of[].constructor(pages);let i = index"><a [class]="currentPage == i+1 ? 'no-drop active-pagi':''"
+        style="cursor: pointer;" *ngIf="(i+1 == currentPage) || (i+1 < currentPage?(i+3 >= currentPage):(i-1 <= currentPage))"
+        (click)="loadPage(i+1)">{{i+1}}</a></li>
+    <li>
+    <li>
+      <a [class]="
+        currentPage==pages ? 'no-drop' : ''" (click)=" nextPage()" style="cursor: pointer;"
+        aria-label="Next">
+        <span aria-hidden="true">Next</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Do you want to Delete Notice?</p>
+    <button type="button" class="btn btn-default" (click)="deleteNotice()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>
+<ng-template #templateDescription>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="ql-editor preview ellipsis" data-ellipsis="5" [innerHTML]="noticeDescription"></div>
+  </div>
+</ng-template>

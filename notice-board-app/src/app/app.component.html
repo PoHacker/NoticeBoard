@@ -1,0 +1,66 @@
+<body>
+    <div class="container-fluid nopadding">
+        <div>
+            <nav class="navbar navbar-default" id='navmenu'>
+                <div class="topmenu">
+                    <ul class="topmenu-left ">
+                        <li class="sidebar-brand " [routerLink]="['dashboard']"><img class="pointer" src="../assets/img/new.png"></li>
+                        <li class="sidebar-brand m-l220 " id="logo"><a class="pointer" id="menu-toggle" href="#"
+                                [hidden]="!isAdmin"><img src="../assets/img/menu.png"></a></li>
+                    </ul>
+                    <ul class="topmenu-right p-r25">
+                        <li><a (click)="logout()" *ngIf="isLoggedIn" class="pointer" tooltip="Logout" placement="bottom"><img
+                                    src="../assets/img/login-out.png"></a></li>
+                        <li *ngIf="!isLoggedIn"><a class="google-login pointer" (click)="socialSignIn()"><img src="assets/img/google-btn.png" />SignIn</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </nav>
+            <!--top header end-->
+
+
+            <!--side menu-->
+            <div class="menubar  nopadding active" id="wrapper" [hidden]="!isAdmin">
+                <!--profile-wrapper-->
+                <div class="profile-wrapper">
+                    <div class="profile-overlay">
+                        <div>
+                            <div><img *ngIf="profilePic" [src]="profilePic" class="profile">
+                                <img *ngIf="!profilePic" src="../../../assets/img/avtar/profile_icon_big.png">
+                            </div>
+                            <h4 class="username" *ngIf="adminName">{{adminName}}</h4>
+                        </div>
+                    </div>
+                </div>
+                <!--profile-wrapper-->
+
+                <ul class="nopadding">
+                    <li class="submenu" [routerLinkActive]="['nav-active']"><a [routerLink]="['dashboard']" class="sidebtn"><i
+                                class="ion-android-home p-r10"></i>
+                            Home</a> </li>
+                    <li class="submenu" [routerLinkActive]="['nav-active']"><a [routerLink]="['admin/dashboard']"><i
+                                class="fa fa-user-o p-r10" aria-hidden="true"></i>
+                            Pending notices</a></li>
+
+                    <li class="submenu" [routerLinkActive]="['nav-active']"><a [routerLink]="['admin/notices']"><i
+                                class="fa fa-credit-card p-r10" aria-hidden="true"></i>
+                            Notices</a></li>
+                    <li class="submenu" [routerLinkActive]="['nav-active']">
+                        <a [routerLink]="['admin/events']"> <i class="fa fa-external-link p-r10" aria-hidden="true"></i>
+                            Events</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--side menu end-->
+
+        <!--main content-->
+        <div>
+            <div class="content m-l200 p-l0" id="maincontent">
+                <router-outlet (activate)="changeOfRoutes()"></router-outlet>
+                <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#d17777" type="ball-climbing-dot"></ngx-spinner>
+                <p-toast></p-toast>
+            </div>
+        </div>
+        <div class="footer1"> © 2018 Argusoft | All Rights Reserved</div>
+    </div>
+</body>

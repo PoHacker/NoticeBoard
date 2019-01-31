@@ -1,0 +1,25 @@
+{
+    "db": {
+        "user": "postgres",
+        "host": "localhost",
+        "database": "postgres",
+        "password": "12345",
+        "port": 5432
+    },
+    "user_db": {
+        "user": "postgres",
+        "host": "localhost",
+        "database": "ars",
+        "password": "12345",
+        "port": 5432
+    },
+    "emailAuth": {
+        "type": "OAuth2",
+        "user": "rpanda@argusoft.in",
+        "clientId": "859546288771-jff8kf57vjisp9gpiefgq4vk82on7021.apps.googleusercontent.com",
+        "clientSecret": "tqYvdZxMVt0mi1E1SpThdLIU",
+        "refreshToken": "1/lFrkq7Vmsh2tetH2Lpq6S8LIdLj7slZPhB7M51wGVqE",
+        "accessToken": "ya29.Gls7BrRY-66ZdF2E_hwA_Pie4fbzb9WZJR7YrobqIQZWsKUimAuIHCUN3vIMBvy-wBBbWC9qpV6894u47NOzfMovp0FYtZH2lD3-cBbt0IbYoKIr36pJ1t8A0Ibz"
+    },
+    "senderEmail": "rpanda@argusoft.in"
+}

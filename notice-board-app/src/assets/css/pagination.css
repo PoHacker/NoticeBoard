@@ -1,0 +1,44 @@
+
+/* Pagination from style.css */
+
+
+.pagination{
+    margin: 40px 15px;
+}
+
+.ql-toolbar.ql-snow{
+    white-space: normal;
+}
+
+
+.pagination li a{
+    background: none;
+    border:0px;
+    color: #000;
+    font-weight: 300;
+    font-size: 15px;
+    padding: 2px 8px;
+}
+
+.pagination li a:hover{
+    background: none;  
+}
+
+.active-pagi{
+    background:#903564 !important;
+    color: #fff !important;
+}
+
+.text-bold{font-weight: 600;}
+.no-drop {
+    background: #eaeaea ;
+    cursor: not-allowed !important;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+
+
+/* Pagination End from style.css */

@@ -1,0 +1,38 @@
+<div class="container">
+    <h1>Add Notice</h1>
+    <div class="container-fluid">
+        <div class="wrapper-white-bg">
+            <form [formGroup]="noticeDetails" (ngSubmit)="onSubmit()" class="form-horizontal">
+                <div class="form-group">
+                    <label class=" control-label col-sm-2" for="title">Title</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="title" class="form-control" formControlName="title" placeholder="Title of notice">
+
+                        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert-danger">
+                            <div *ngIf="(!title.errors.required && title.errors.maxlength)">Title must be less than 60
+                                characters</div>
+                            <div *ngIf="title.errors.required">Title is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" for=" description">Description</label>
+                    <div class="col-sm-6">
+                        <quill-editor [options]="editorConfig" formControlName="description" required></quill-editor>
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert-danger">
+                            <div *ngIf="(!description.errors.required && description.errors.minlength)">Description
+                                must be greater than 10 characters </div>
+                            <div *ngIf="description.errors.required">Description is required</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-8 row">
+                    <div class="pull-right">
+                        <a class="btn custombtn pointer" (click)="cancel()">Cancel</a>
+                        <button class="btn btn-primary post-btn" [disabled]="!noticeDetails.valid">Add Notice</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

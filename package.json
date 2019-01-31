@@ -1,0 +1,45 @@
+{
+  "name": "virtual-notice-board",
+  "version": "1.0.0",
+  "description": "Argusoft Virtual Notice Board",
+  "main": "index.js",
+  "engines": {
+    "node": "11.0.0",
+    "npm": "6.4.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://argusgit.argusoft.com/poc/virtual-notice-board.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular-datatables": "^6.0.1",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "datatables.net": "^1.10.19",
+    "datatables.net-dt": "^1.10.19",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "googleapis": "^27.0.0",
+    "joi": "^14.0.0",
+    "jquery": "^3.3.1",
+    "loadash": "^1.0.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "node-json-db": "^0.9.1",
+    "nodemailer": "^4.6.8",
+    "nodemon": "^1.18.9",
+    "otp.js": "^1.1.0",
+    "pg": "^7.5.0",
+    "squel": "^5.12.2"
+  },
+  "devDependencies": {
+    "@angular/cli": "^7.1.0"
+  }
+}

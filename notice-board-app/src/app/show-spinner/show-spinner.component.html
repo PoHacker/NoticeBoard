@@ -1,0 +1,15 @@
+<!-- <div id="toolbar">
+  <button class="ql-bold">Bold</button>
+  <button class="ql-italic">Italic</button>
+  <select class="ql-size">
+    <option value="small"></option>
+    <option selected></option>
+    <option value="large"></option>
+    <option value="huge"></option>
+  </select>
+  <button class="ql-script" value="sub"></button>
+  <button class="ql-script" value="super"></button>
+  <button style="width: 120px" (click)="customButtonClick()">custom button</button>
+</div> -->
+<quill-editor [options]="editorConfig" (blur)="onEditorBlured($event)" (focus)="onEditorFocused($event)" (ready)="onEditorCreated($event)"
+  (change)="onContentChanged($event)"></quill-editor>

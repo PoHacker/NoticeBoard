@@ -1,0 +1,8 @@
+.container.p-0{
+    margin-top: 90px;
+}
+:host /deep/ .ui-toast-message.ui-toast-message-warn  {
+    background-color: red !important;
+    border: 0 none;
+    color: #212121;
+}

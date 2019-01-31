@@ -1,0 +1,85 @@
+<div class="container">
+  <h1 *ngIf="isEvent">Edit Event</h1>
+  <h1 *ngIf="!isEvent">Edit Notice</h1>
+  <div class="container-fluid">
+    <div class="wrapper-white-bg">
+      <form [formGroup]="noticeDetails" (ngSubmit)="onSubmit()" class="form-horizontal">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="title">Summary</label>
+          <div class="col-sm-6">
+            <input type="text" id="title" class="form-control" formControlName="title" placeholder="Summary of event">
+            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert-danger">
+              <div *ngIf="(!title.errors.required && title.errors.maxlength)">Summary must be less than 60
+                characters</div>
+              <div *ngIf="title.errors.required">Summary is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="description">Description</label>
+          <div class="col-sm-6">
+            <quill-editor [options]="editorConfig" formControlName="description" required></quill-editor>
+            <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert-danger">
+              <div *ngIf="(!description.errors.required && description.errors.minlength)">Description
+                must be greater than 10 characters </div>
+              <div *ngIf="description.errors.required">Description is required</div>
+            </div>
+
+            <div class="form-group" *ngIf="isEvent">
+
+              <div class="col-sm-6" style="margin-top: 15px;">
+                <p-calendar showTime="true" formControlName="start" dateFormat="dd/mm/yy" placeholder="Start of event"
+                  class="" hourFormat="12" [showIcon]="true" [minDate]="now" [defaultDate]="now" [required]="true"
+                  [showButtonBar]="true" [inputStyle]="{'width':'100%'}">
+                  <p-header>Start of Event</p-header>
+                </p-calendar>
+                <div *ngIf="start.invalid && (start.dirty || start.touched)" class="alert-danger">
+                  <div *ngIf="start.errors.required">Start date & time is required</div>
+                </div>
+              </div>
+
+              <div class="col-sm-6" style="margin-top: 15px; text-align: right;">
+                <p-calendar showTime="true" formControlName="end" dateFormat="dd/mm/yy" placeholder="End of event"
+                  class="" hourFormat="12" [showIcon]="true" [minDate]="now" [defaultDate]="now" [required]="true"
+                  [showButtonBar]="true" [inputStyle]="{'width':'100%'}">
+                  <p-header>End of Event</p-header>
+                </p-calendar>
+                <div *ngIf="noticeDetails.errors && (end.dirty || end.touched)" class="alert-danger">
+                  <!-- <div *ngIf=" !end.invalid &&noticeDetails.errors.invalidStart">Invaid Start time</div> -->
+                  <div *ngIf=" !end.invalid &&noticeDetails.errors.validTime">End time must be greater than start
+                    time</div>
+                </div>
+                <div *ngIf="end.invalid && (end.dirty || end.touched)" class="alert-danger">
+                  <div *ngIf="end.errors.required">End date & time is required</div>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="emailsList">
+          <label class="col-sm-2 control-label">Attendees</label>
+          <div class="col-sm-6">
+            <ng-multiselect-dropdown formControlName="attendees" placeholder="Attendees for the Event" [data]="dropdownList"
+              (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)" [settings]="dropdownSettings">
+            </ng-multiselect-dropdown>
+          </div>
+        </div>
+
+        <div class="form-group col-md-8 row">
+          <div class="pull-right">
+            <a class="btn custombtn pointer" (click)="cancel()">Cancel</a>
+            <button class="btn btn-primary post-btn" [disabled]="!noticeDetails.valid" *ngIf="isEvent">Edit Event</button>
+            <button class="btn btn-primary post-btn" [disabled]="!noticeDetails.valid" *ngIf="!isEvent">Edit Notice</button>
+          </div>
+        </div>
+        
+      </form>
+    </div>
+
+  </div>
+</div>

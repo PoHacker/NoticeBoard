@@ -1,0 +1,199 @@
+<div class="inner-page container  mt-100 p-0" *ngIf="noticeDetails">
+  <div class=" col-lg-12">
+    <div class="inner-card-wrapper" *ngIf="noticeDetails">
+      <div class="card-content border-inner--orange">
+        <span class="post-user"><img *ngIf="noticeDetails.profilePic" src={{noticeDetails.profilePic}}>
+          <img *ngIf="!noticeDetails.profilePic" src="../../../assets/img/avtar/profile_icon_big.png">
+        </span>
+        <div class="push-right">
+          <ul>
+            <li class="post-user-name"> {{noticeDetails.createdby}}</li>
+            <li class="xs-none">
+              <span class="text-bold">
+                <!--<i class="fa fa-calendar" aria-hidden="true"></i>-->
+                Time:</span>
+              {{noticeDetails.creationdate | date:'shortTime'}}
+            </li>
+            <li><span class="text-bold">Date:</span> {{noticeDetails.creationdate | date:'shortDate'}}</li>
+          </ul>
+          <div class="inner-card-header">{{noticeDetails.title}}</div>
+          <div class="card-inner-text">
+            <div class="ql-editor preview" [innerHTML]="noticeDetails.description"></div>
+          </div>
+          <hr>
+          <form [formGroup]="commentData" (ngSubmit)="postComment()">
+
+            <div class="comment">
+              <textarea rows="4" formControlName="comment" placeholder="Comment..."></textarea>
+              <div *ngIf="commentError">Can not post Empty Comments</div>
+            </div>
+            <div class="text-right">
+              <a role="btn" (click)="clearForm()" type="submit" class="btn custombtn" style="cursor: pointer;">Cancel</a>
+              <button type="submit" class="btn btn-primary post-btn" [disabled]="!commentData.valid ">Post</button>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+        <h4 style="margin-bottom: 0px;">Comments</h4>
+        <hr>
+        <div class="post" *ngIf="comments.length == 0">
+          No Comments
+        </div>
+        <div class="post" *ngFor="let comment of comments">
+          <div class="col-xs-12" style="padding-left: 60px; margin-bottom: 20px">
+            <span class="post-user" style="position: absolute;left: 0px;
+              top: -25px;"><img *ngIf="comment.profilePic"
+                src={{comment.profilePic}}>
+              <img *ngIf="!comment.profilePic" src="../../../assets/img/avtar/profile_icon_big.png">
+            </span>
+            <div class="user-name" style="display: inline-block; padding-left: 15px; position: relative; top: -15px; ">
+              <ul>
+                <li class="post-user-name"> {{comment.createdby}}</li>
+                <li class="xs-none">
+                  <span class="text-bold">
+                    <!--<i class="fa fa-calendar" aria-hidden="true"></i>-->
+                    Time:</span>
+                  {{comment.creationdate | date:'shortTime'}}
+                </li>
+                <li><span class="text-bold">Date:</span> {{comment.creationdate | date:'shortDate'}}</li>
+                <li *ngIf="comment.email == userEmail"><a class="pointer" (click)="openEditModal(comment,editTemplate)">Edit</a></li>
+                <li *ngIf="comment.email == userEmail"><a class="pointer" (click)="opneDeleteModal(comment.id)">Delete</a></li>
+              </ul>
+              <p style="font-weight: normal"> {{comment.description}} </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="inner-page container  mt-100 p-0" *ngIf="eventDetails">
+  <div class=" col-lg-12">
+    <div class="inner-card-wrapper">
+      <div class="card-content border-inner--orange">
+        <span class="post-user">
+          <img *ngIf="eventDetails.profilePic" src={{eventDetails.profilePic}}>
+          <img *ngIf="!eventDetails.profilePic" src="../../../assets/img/avtar/profile_icon.png">
+        </span>
+        <div class="push-right card-content-2">
+
+          <div class="inner-card-header name">{{eventDetails.createdby}}</div>
+
+          <ul>
+            <li class="no-padding " style="display: block; font-weight: 200;">
+              {{eventDetails.creationdate | date}}
+            </li>
+            <li class="post-user-name no-padding" style="font-weight: 500; color: #000; font-size: 15px;"> {{eventDetails.title}}</li>
+
+          </ul>
+          <ul >
+            <!-- <li class="post-user-name no-padding"> {{eventDetails.title}}</li> -->
+          </ul>
+
+          <div class="card-inner-text" style="margin-top: 50px">
+            <div class="ql-editor preview" [innerHTML]="eventDetails.description"></div>
+            <ul>
+              <li class="width-75">Start Date</li>
+              <li class="xs-none ">
+                <span class="text-bold">
+                  <!--<i class="fa fa-calendar" aria-hidden="true"></i>-->
+                  Time:</span>
+                {{eventDetails.start | date:'shortTime'}}
+              </li>
+              <li><span class="text-bold">Date:</span> {{eventDetails.start | date:'shortDate'}}</li>
+            </ul>
+            <ul style="display: block; margin-top: -8px;">
+              <li class="width-75">End Date</li>
+              <li class="xs-none">
+                <span class="text-bold">
+                  <!--<i class="fa fa-calendar" aria-hidden="true"></i>-->
+                  Time:</span>
+                {{eventDetails.end | date:'shortTime'}}
+              </li>
+              <li><span class="text-bold">Date:</span> {{eventDetails.end | date:'shortDate'}}</li>
+            </ul>
+            <ul style="display: block; margin-top: -8px;">
+              <li class="width-75">Attendees</li>
+              <li class="pointer" (click)="showAttendees(attendeesDetails)">{{attendeesList.length}}</li>
+            </ul>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #editTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Edit Comment</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="editCommentData" (ngSubmit)="editComment()">
+    <div class="modal-body" *ngIf="commentToBeModified">
+
+      <div class="comment">
+        <textarea rows="4" formControlName="comment" placeholder="Comment..."></textarea>
+        <div *ngIf="commentError">Can not post Empty Comments</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn custombtn" [disabled]="!editCommentData.valid">Update</button>
+    </div>
+  </form>
+  <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">{{closeBtnName}}</button>
+  </div> -->
+</ng-template>
+
+
+<ng-template #attendeesDetails>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Attendees List</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ol *ngIf="attendeesList.length">
+      <li *ngFor="let attendee of attendeesList">
+        <!-- <span class="post-user" style="width:10px !important;height: 10px !important;">
+          <img *ngIf="attendee.profilePic" src={{attendee.profilePic}}>
+          <img *ngIf="!attendee.profilePic" src="../../../assets/img/avtar/profile_icon.png"> </span> -->
+        {{attendee.name}}
+      </li>
+    </ol>
+    <ul *ngIf="!attendeesList.length">
+      <li>No Attendees</li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+  </div>
+</ng-template>
+
+
+
+
+
+<p-toast position="center" key="deleteTemplate" (onClose)="onReject()" [modal]="true" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+      <h3>Delete Comment</h3>
+      <p>Do you want to Delete Comment?</p>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="deleteComment()" label="Yes" class="ui-button-success"></button>
+      </div>
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="onReject()" label="No" class="ui-button-secondary"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
